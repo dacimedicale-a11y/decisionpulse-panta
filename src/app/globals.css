@@ -43,7 +43,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 28px 48px; }
 
 .hero {
   display: grid; grid-template-columns: 1.7fr .8fr; gap: 28px;
-  padding: 62px 0 38px; align-items: end;
+  padding: 62px 0 38px; align-items: flex-end;
 }
 .eyebrow, .kicker {
   color: var(--cyan); font-weight: 800; font-size: 11px; letter-spacing: .16em;
@@ -73,7 +73,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 28px 48px; }
   border: 1px solid var(--line); background: var(--panel);
   border-radius: 20px; overflow: hidden;
 }
-.panelHeader { display: flex; justify-content: space-between; gap: 20px; align-items: end; padding: 22px; border-bottom: 1px solid var(--line); }
+.panelHeader { display: flex; justify-content: space-between; gap: 20px; align-items: flex-end; padding: 22px; border-bottom: 1px solid var(--line); }
 .panelHeader h2 { margin: 6px 0 0; font-size: 20px; }
 .search {
   background: #081216; color: var(--text); border: 1px solid var(--line);
@@ -111,7 +111,7 @@ main { max-width: 1480px; margin: 0 auto; padding: 0 28px 48px; }
 .detailPanel h2 { font-size: 26px; line-height: 1.18; letter-spacing: -.025em; margin: 20px 0 9px; }
 .desc { color: var(--muted); line-height: 1.55; font-size: 13px; }
 .probabilityBox { margin: 22px 0; padding: 18px; background: #081216; border: 1px solid var(--line); border-radius: 15px; }
-.probabilityBox > div:first-child { display: flex; justify-content: space-between; align-items: end; }
+.probabilityBox > div:first-child { display: flex; justify-content: space-between; align-items: flex-end; }
 .probabilityBox span { color: var(--muted); font-size: 11px; }
 .probabilityBox strong { font-size: 36px; color: var(--cyan); }
 .bar { height: 8px; background: #25373e; border-radius: 999px; margin: 14px 0 10px; overflow: hidden; }
