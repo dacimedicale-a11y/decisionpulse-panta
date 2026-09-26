@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DecisionPulse — Standalone Demo</title>
+<style>
+:root{--bg:#071014;--panel:#0d171c;--panel2:#111e24;--line:#203139;--text:#eff7f7;--muted:#8fa6ad;--cyan:#67f6d2;--lime:#c8ff69;--orange:#ffbd66}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 85% 0%,rgba(103,246,210,.08),transparent 24rem),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+main{max-width:1380px;margin:auto;padding:0 24px 48px} header{min-height:78px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px} .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--cyan),var(--lime));color:#071014;display:grid;place-items:center;font-weight:900}
+.brand small,.source,.muted{color:var(--muted)} .brand div:last-child{display:flex;flex-direction:column}
+.hero{display:grid;grid-template-columns:1.7fr .8fr;gap:28px;padding:58px 0 34px;align-items:end} .eyebrow{color:var(--cyan);font-weight:800;font-size:11px;letter-spacing:.16em}
+h1{font-size:clamp(42px,6vw,72px);line-height:.97;margin:12px 0 18px;letter-spacing:-.055em} .hero p{color:var(--muted);max-width:670px;line-height:1.6}
+.trigger{border:1px solid var(--line);background:rgba(17,30,36,.8);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px} .trigger strong{font-size:42px} input[type=range]{accent-color:var(--cyan)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--panel);margin-bottom:22px}
+.stats div{padding:16px 18px;border-right:1px solid var(--line)} .stats div:last-child{border-right:0} .stats span{display:block;color:var(--muted);font-size:12px} .stats strong{display:block;font-size:24px;margin-top:6px}
+.grid{display:grid;grid-template-columns:1.35fr .75fr;gap:22px} .panel{border:1px solid var(--line);background:var(--panel);border-radius:20px;overflow:hidden}
+.panelHead{padding:20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:end} .panelHead h2{margin:5px 0 0;font-size:20px}
+.search{background:#081216;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:240px}
+.row{display:grid;grid-template-columns:62px 1fr 38px;gap:14px;align-items:center;padding:15px 18px;border-bottom:1px solid var(--line);cursor:pointer} .row:hover,.row.active{background:var(--panel2)} .row.active{box-shadow:inset 3px 0 var(--cyan)}
+.ring{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--cyan) var(--p),#23363e 0);position:relative} .ring:after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--panel2)} .ring span{z-index:1;font-size:12px;font-weight:800}
+.meta{display:flex;gap:9px;color:var(--cyan);font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px} .copy strong{font-size:14px;line-height:1.35;display:block} .copy small{display:block;color:var(--muted);margin-top:6px}
+.star{border:0;background:none;color:#6b7d83;font-size:22px;cursor:pointer} .star.on{color:var(--lime)}
+.detail{padding:22px;align-self:start;position:sticky;top:14px} .detail h2{font-size:25px;line-height:1.18;margin:18px 0 8px} .pill{display:inline-block;color:var(--cyan);font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 9px}
+.box{margin:20px 0;padding:16px;background:#081216;border:1px solid var(--line);border-radius:14px} .big{font-size:34px;color:var(--cyan);font-weight:800;float:right} .bar{clear:both;height:8px;background:#25373e;border-radius:999px;margin:14px 0 10px;overflow:hidden} .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--lime))}
+.decision{border:1px solid rgba(103,246,210,.32);background:rgba(103,246,210,.045);border-radius:15px;padding:17px} .decision h3{margin:6px 0 8px} .decision p{color:#bed0d5;font-size:13px;line-height:1.55}
+.foot{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:10px}
+@media(max-width:900px){.hero,.grid{grid-template-columns:1fr}.detail{position:static}.stats{grid-template-columns:1fr 1fr}} @media(max-width:600px){main{padding:0 12px 28px}.panelHead{flex-direction:column;align-items:stretch}.search{min-width:0;width:100%}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand"><div class="logo">DP</div><div><strong>DecisionPulse</strong><small>Prediction markets → decision signals</small></div></div><div class="source">● Standalone demo · Powered by Panta</div></header>
+<section class="hero"><div><div class="eyebrow">POWERED BY PANTA</div><h1>Stop watching odds.<br>Start using them.</h1><p>DecisionPulse turns prediction-market probabilities into a decision layer: conviction scores, thresholds, watchlists and scenario guidance.</p></div><div class="trigger"><span class="muted">Decision trigger</span><strong id="tlabel">70%</strong><input id="threshold" type="range" min="55" max="90" value="70"><small class="muted">Trigger when YES or NO crosses this threshold.</small></div></section>
+<section class="stats"><div><span>Markets scanned</span><strong id="sMarkets">4</strong></div><div><span>Watchlist</span><strong id="sWatch">0</strong></div><div><span>Triggers active</span><strong id="sTrig">0</strong></div><div><span>Highest conviction</span><strong id="sConv">—</strong></div></section>
+<div class="grid"><section class="panel"><div class="panelHead"><div><div class="eyebrow">MARKET RADAR</div><h2>Signals ranked by conviction</h2></div><input id="search" class="search" placeholder="Search markets..."></div><div id="list"></div></section><aside class="panel detail" id="detail"></aside></div>
+</main>
+<script>
+const markets=[{"marketId": "demo-1", "category": "Crypto", "title": "Will SOL close above a major resistance level this week?", "description": "Demo fallback market shown until a Panta API key is configured.", "phase": "active", "yesPrice": 0.71, "noPrice": 0.29, "totalVolumeUsdc": 18420}, {"marketId": "demo-2", "category": "Macro", "title": "Will the next major inflation print come in below consensus?", "description": "DecisionPulse can convert any Panta market into a monitored decision trigger.", "phase": "active", "yesPrice": 0.43, "noPrice": 0.57, "totalVolumeUsdc": 9630}, {"marketId": "demo-3", "category": "Technology", "title": "Will a major AI product milestone ship before quarter end?", "description": "Use prediction markets as an intelligence layer rather than a betting destination.", "phase": "active", "yesPrice": 0.82, "noPrice": 0.18, "totalVolumeUsdc": 22100}, {"marketId": "demo-4", "category": "Sports", "title": "Will the favorite win the featured event?", "description": "The dashboard remains category-agnostic.", "phase": "active", "yesPrice": 0.54, "noPrice": 0.46, "totalVolumeUsdc": 31200}];
+let selected=markets[0].marketId, watch=new Set(), threshold=70, query="";
+function prob(m){return Math.max(0,Math.min(1,Number(m.yesPrice ?? (1-Number(m.noPrice)) ?? .5)))}
+function volume(m){return Number(m.totalVolumeUsdc||0)}
+function conv(m){const d=Math.abs(prob(m)-.5)*2, vb=Math.min(1,Math.log10(volume(m)+1)/5);return Math.round((d*.75+vb*.25)*100)}
+function label(m){const p=prob(m),c=conv(m);if(c<35)return"Uncertain";if(p>=.72)return"Strong YES";if(p>=.58)return"Leaning YES";if(p<=.28)return"Strong NO";if(p<=.42)return"Leaning NO";return"Balanced"}
+function guidance(m){const p=prob(m),c=conv(m);if(c<35)return"Evidence is still mixed. Treat this market as a monitoring signal, not a trigger.";if(p>=.72)return"YES probability is high enough to justify preparing the YES scenario now.";if(p<=.28)return"NO probability dominates. Prioritize the NO scenario and keep a reversal trigger.";return"The market has a directional lean, but the edge is not yet decisive. Stage both scenarios."}
+function trigger(m){const p=prob(m)*100;return p>=threshold?"YES triggered":p<=100-threshold?"NO triggered":"Monitoring"}
+function render(){
+ document.getElementById("tlabel").textContent=threshold+"%";
+ const f=markets.filter(m=>(m.title+" "+m.category+" "+m.description).toLowerCase().includes(query.toLowerCase())).sort((a,b)=>conv(b)-conv(a));
+ document.getElementById("list").innerHTML=f.map(m=>`<div class="row ${m.marketId===selected?"active":""}" onclick="selectMarket('${m.marketId}')"><div class="ring" style="--p:${prob(m)*100}%"><span>${Math.round(prob(m)*100)}%</span></div><div class="copy"><div class="meta"><span>${m.category}</span><span>${label(m)}</span></div><strong>${m.title}</strong><small>$${volume(m).toLocaleString()} volume · conviction ${conv(m)}%</small></div><button class="star ${watch.has(m.marketId)?"on":""}" onclick="toggleWatch(event,'${m.marketId}')">${watch.has(m.marketId)?"★":"☆"}</button></div>`).join("");
+ const m=markets.find(x=>x.marketId===selected)||markets[0], p=Math.round(prob(m)*100);
+ document.getElementById("detail").innerHTML=`<span class="pill">${m.category}</span><h2>${m.title}</h2><p class="muted">${m.description}</p><div class="box"><span class="muted">YES probability</span><span class="big">${p}%</span><div class="bar"><i style="width:${p}%"></i></div><div class="muted">NO ${100-p}% · Volume $${volume(m).toLocaleString()}</div></div><div class="decision"><div class="eyebrow">DECISION LAYER</div><h3>${label(m)} · ${conv(m)}% conviction</h3><p>${guidance(m)}</p><strong>${trigger(m)}</strong></div><div class="foot">Standalone visual demo. Live version reads Panta markets and recent trade flow through server-side API routes.</div>`;
+ document.getElementById("sWatch").textContent=watch.size;
+ document.getElementById("sTrig").textContent=[...watch].map(id=>markets.find(m=>m.marketId===id)).filter(m=>m&&trigger(m)!=="Monitoring").length;
+ document.getElementById("sConv").textContent=Math.max(...markets.map(conv))+"%";
+}
+window.selectMarket=id=>{selected=id;render()}; window.toggleWatch=(e,id)=>{e.stopPropagation();watch.has(id)?watch.delete(id):watch.add(id);render()};
+document.getElementById("threshold").addEventListener("input",e=>{threshold=Number(e.target.value);render()});
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render()});
+render();
+</script>
+</body></html>
